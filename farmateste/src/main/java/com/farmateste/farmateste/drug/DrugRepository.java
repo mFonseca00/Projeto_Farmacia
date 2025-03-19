@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface DrugRepository extends JpaRepository<Drug, Long> {
     // Não é necessário implementar métodos, pois JpaRepository fornece a implementação padrão.
-    // Métodos adicionais podem ser declarados aqui, se necessário.
+    // A lógica de serviço fica dentro da classe DrugService
 }
