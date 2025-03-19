@@ -1,0 +1,14 @@
+{
+    "java.project.sourcePaths": [
+        "famasteste/src/main/java"
+    ],
+    "java.project.referencedLibraries": [],
+    "java.home": "C:\\Program Files\\Java\\jdk-17",  // Verifique se o caminho está correto para o seu JDK
+    "java.configuration.update.build": "automatic",
+    "java.import.gradle.enabled": true,
+    "java.import.maven.enabled": true,
+    "java.project.referencedLibraries": [
+        "Maven",
+        "JDK"
+    ]
+}
