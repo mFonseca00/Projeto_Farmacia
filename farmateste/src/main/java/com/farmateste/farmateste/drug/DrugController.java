@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping(name = "/drugs")
+@RequestMapping("/drugs")
 @RequiredArgsConstructor
 public class DrugController {
 
@@ -19,11 +19,5 @@ public class DrugController {
     public void register(@RequestBody DrugDTO dto){
         drugService.createDrug(dto);
     }
-
-    // @PostMapping()
-    // public void postMethodName(@RequestBody String entity) {
-    //     //TODO: process POST request
-        
-    // }
     
 }

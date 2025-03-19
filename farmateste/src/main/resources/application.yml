@@ -1,9 +1,13 @@
 spring:
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3307/farmateste?createDatabaseIfNotExist=true
-        username: root
-        password: ADMIN
-    jpa:
-        show-sql: true
-
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/farmateste?createDatabaseIfNotExist=true
+    username: root
+    password: ADMIN
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true # Para formatar as SQL geradas
+        use_sql_comments: true # Para adicionar comentários nas SQL
+        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Impede a conversão automática de nomes
