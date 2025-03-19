@@ -17,5 +17,12 @@ public class DrugService {
 
     private final ModelMapper modelMapper; // Utilizado para conversão entre entidades e DTOs
 
-    // Aqui podem ser adicionados métodos para manipular dados de medicamentos usando drugRepository e modelMapper.
+    // Métodos para manipular dados de medicamentos usando drugRepository e modelMapper.
+
+    public DrugDTO createDrug(DrugDTO dto){
+        Drug drug = modelMapper.map(dto, Drug.class);
+        drugRepository.save(drug);
+
+        return modelMapper.map(drug, DrugDTO.class);
+    }
 }
