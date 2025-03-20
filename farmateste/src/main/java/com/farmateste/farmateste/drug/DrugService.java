@@ -1,5 +1,8 @@
 package com.farmateste.farmateste.drug;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +27,9 @@ public class DrugService {
         drugRepository.save(drug);
 
         return modelMapper.map(drug, DrugDTO.class);
+    }
+
+    public List<DrugDTO> readAllDrugs() {
+        return drugRepository.findAll().stream().map(d -> modelMapper.map(d, DrugDTO.class)).collect(Collectors.toList());
     }
 }

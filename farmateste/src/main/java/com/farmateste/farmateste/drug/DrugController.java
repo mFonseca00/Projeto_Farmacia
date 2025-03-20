@@ -7,6 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 @RestController
 @RequestMapping("/drugs")
@@ -16,8 +22,14 @@ public class DrugController {
     private final DrugService drugService;
 
     @PostMapping
-    public void register(@RequestBody DrugDTO dto){
+    public void registerDrug(@RequestBody DrugDTO dto){
         drugService.createDrug(dto);
     }
+
+    @GetMapping()
+    public List<DrugDTO> getAllDrugs() {
+        return drugService.readAllDrugs();
+    }
+    
     
 }
