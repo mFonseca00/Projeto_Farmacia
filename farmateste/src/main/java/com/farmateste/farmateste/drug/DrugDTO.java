@@ -1,6 +1,8 @@
 package com.farmateste.farmateste.drug;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +16,9 @@ public class DrugDTO {
 
     @NotBlank
     private String name; // Nome do medicamento
+    @Positive
     private double price; // Preço ou valor do medicamento
+    @PositiveOrZero
     private long quantity; // Quantidade do medicamento disponível
     private boolean available; // Status de disponibilidade do medicamento
     private DrugType drugType; // Tipo do medicamento (ex: ANALGÉSICO, ANTIBIÓTICO)
