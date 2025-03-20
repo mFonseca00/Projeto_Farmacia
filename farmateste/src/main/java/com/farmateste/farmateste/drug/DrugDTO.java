@@ -1,5 +1,6 @@
 package com.farmateste.farmateste.drug;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Setter // Gera os métodos setters para todos os campos
 public class DrugDTO {
 
+    @NotBlank
     private String name; // Nome do medicamento
     private double price; // Preço ou valor do medicamento
     private long quantity; // Quantidade do medicamento disponível
