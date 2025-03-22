@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -31,5 +32,10 @@ public class DrugService {
 
     public List<DrugDTO> readAllDrugs() {
         return drugRepository.findAll().stream().map(d -> modelMapper.map(d, DrugDTO.class)).collect(Collectors.toList());
+    }
+
+    public DrugDTO readById(Long id){
+        Drug drug = drugRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        return modelMapper.map(drug, DrugDTO.class);
     }
 }

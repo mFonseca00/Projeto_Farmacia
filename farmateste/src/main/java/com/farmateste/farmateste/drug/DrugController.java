@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/drugs")
@@ -27,6 +28,11 @@ public class DrugController {
     @GetMapping()
     public List<DrugDTO> getAllDrugs() {
         return drugService.readAllDrugs();
+    }
+
+    @GetMapping("/{id}")
+        public DrugDTO getByIdDrugs(@PathVariable Long id){
+        return drugService.readById(id);
     }
     
 }
