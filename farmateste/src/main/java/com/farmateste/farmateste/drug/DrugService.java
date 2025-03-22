@@ -45,4 +45,8 @@ public class DrugService {
         drug = drugRepository.save(drug);  
         return modelMapper.map(drug, DrugDTO.class);
     }
+
+    public void deleteDrug(Long id){
+        drugRepository.deleteById(id);
+    }
 }

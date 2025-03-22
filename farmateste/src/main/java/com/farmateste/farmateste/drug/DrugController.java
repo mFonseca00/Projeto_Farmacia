@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -31,12 +32,17 @@ public class DrugController {
     }
 
     @GetMapping("/{id}")
-    public DrugDTO getByIdDrugs(@PathVariable Long id){
+    public DrugDTO getByIdDrugs(@PathVariable @NotNull Long id){
         return drugService.readById(id);
     }
 
     @PutMapping("/{id}")
-    public DrugDTO updateDrug(@RequestBody @Valid DrugDTO dto, @PathVariable @NotNull Long id){
+    public DrugDTO updateDrug(@PathVariable @NotNull Long id, @RequestBody @Valid DrugDTO dto){
         return drugService.updateDrugInfo(dto, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteDrugById(@PathVariable @NotNull Long id){
+        drugService.deleteDrug(id);
     }
 }
