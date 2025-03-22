@@ -16,11 +16,16 @@ public class DrugDTO {
 
     @NotBlank
     private String name; // Nome do medicamento
+    @NotBlank
+    private String description;
+    @NotBlank
+    private String manufacturer;
     @Positive
     private double price; // Preço ou valor do medicamento
     @PositiveOrZero
     private long quantity; // Quantidade do medicamento disponível
     private boolean available; // Status de disponibilidade do medicamento
+    private AdministrationRoute administrationRoute;
     private DrugType drugType; // Tipo do medicamento (ex: ANALGÉSICO, ANTIBIÓTICO)
     private PackSize packSize; // Tamanho da embalagem (ex: PEQUENO, MÉDIO, GRANDE)
 }

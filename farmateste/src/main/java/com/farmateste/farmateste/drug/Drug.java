@@ -45,5 +45,15 @@ public class Drug {
     @Column(name = "packSize") // Mapeia a coluna packSize
     private PackSize packSize; // Tamanho da embalagem (ex: PEQUENO, MÉDIO, GRANDE)
 
+    @Column(name = "manufacturer")
+    private String manufacturer;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "administrationRoute")
+    private AdministrationRoute administrationRoute;
+
+    @Column(name = "description")
+    private String description;
+
     // Será necessário um DTO (Data Transfer Object) para filtrar e passar apenas os dados necessários para o cliente
 }
