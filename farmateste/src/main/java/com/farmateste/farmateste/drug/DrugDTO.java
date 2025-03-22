@@ -14,6 +14,7 @@ import lombok.Setter;
 @Setter // Gera os métodos setters para todos os campos
 public class DrugDTO {
 
+    private Long id;
     @NotBlank
     private String name; // Nome do medicamento
     @NotBlank

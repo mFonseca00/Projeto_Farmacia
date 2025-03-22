@@ -38,4 +38,11 @@ public class DrugService {
         Drug drug = drugRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
         return modelMapper.map(drug, DrugDTO.class);
     }
+
+    public DrugDTO updateDrugInfo(DrugDTO dto, Long id){
+        Drug drug = modelMapper.map(dto, Drug.class);
+        drug.setId(id);
+        drug = drugRepository.save(drug);  
+        return modelMapper.map(drug, DrugDTO.class);
+    }
 }
