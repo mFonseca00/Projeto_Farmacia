@@ -1,9 +1,8 @@
 package com.farmateste.farmateste.drug;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -30,8 +29,8 @@ public class DrugService {
         return modelMapper.map(drug, DrugDTO.class);
     }
 
-    public List<DrugDTO> readAllDrugs() {
-        return drugRepository.findAll().stream().map(d -> modelMapper.map(d, DrugDTO.class)).collect(Collectors.toList());
+    public Page<DrugDTO> readAllDrugs(Pageable page) {
+        return drugRepository.findAll(page).map(d -> modelMapper.map(d, DrugDTO.class));
     }
 
     public DrugDTO readById(Long id){
