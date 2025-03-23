@@ -5,12 +5,17 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.net.URI;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,27 +28,33 @@ public class DrugController {
     private final DrugService drugService;
 
     @PostMapping
-    public void registerDrug(@RequestBody @Valid DrugDTO dto){
-        drugService.createDrug(dto);
+    public ResponseEntity<DrugDTO> registerDrug(@RequestBody @Valid DrugDTO dto, UriComponentsBuilder uriBuilder){
+        DrugDTO drugDTO = drugService.createDrug(dto);
+        URI adress = uriBuilder.path("/drugs/{id}").buildAndExpand(drugDTO.getId()).toUri();
+        return ResponseEntity.created(adress).body(drugDTO);
     }
 
     @GetMapping()
-    public Page<DrugDTO> getAllDrugs(@PageableDefault(size = 10) Pageable page) {
-        return drugService.readAllDrugs(page);
+    public ResponseEntity<Page<DrugDTO>> getAllDrugs(@PageableDefault(size = 10) Pageable page) {
+        Page<DrugDTO> drugs = drugService.readAllDrugs(page);
+        return ResponseEntity.ok(drugs);
     }
 
     @GetMapping("/{id}")
-    public DrugDTO getByIdDrugs(@PathVariable @NotNull Long id){
-        return drugService.readById(id);
+    public ResponseEntity<DrugDTO> getByIdDrugs(@PathVariable @NotNull Long id){
+        DrugDTO drugDTO = drugService.readById(id);
+        return ResponseEntity.ok(drugDTO);
     }
 
     @PutMapping("/{id}")
-    public DrugDTO updateDrug(@PathVariable @NotNull Long id, @RequestBody @Valid DrugDTO dto){
-        return drugService.updateDrugInfo(dto, id);
+    public ResponseEntity<DrugDTO> updateDrug(@PathVariable @NotNull Long id, @RequestBody @Valid DrugDTO dto){
+        DrugDTO updatedDrugDTO = drugService.updateDrugInfo(dto, id);
+        return ResponseEntity.ok(updatedDrugDTO);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDrugById(@PathVariable @NotNull Long id){
+    public ResponseEntity<Void> deleteDrugById(@PathVariable @NotNull Long id){
         drugService.deleteDrug(id);
+        return ResponseEntity.noContent().build();
     }
 }
