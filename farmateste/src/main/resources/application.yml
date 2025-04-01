@@ -11,3 +11,7 @@ spring:
         format_sql: true # Para formatar as SQL geradas
         use_sql_comments: true # Para adicionar comentários nas SQL
         physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Impede a conversão automática de nomes
+
+server:
+  error:
+    include-stacktrace: never
