@@ -21,17 +21,18 @@ public class Filter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {   
                     String tokenJWT = findToken(request);
-                    String userLogin = tokenService.findUserInToken(tokenJWT);
-                    
+                    if(tokenJWT != null){
+                        String userLogin = tokenService.findUserInToken(tokenJWT);
+                    }
                     filterChain.doFilter(request, response);
     }
 
     private String findToken(HttpServletRequest request){
         var authorization = request.getHeader("Authorization");
-        if(authorization == null){
-            throw new RuntimeException("Token not found.");
-        }
-        return authorization.replace("Bearer ", "");
+        if(authorization != null){
+            return authorization.replace("Bearer ", "");
+        } 
+        return null;
     }
 
 }
