@@ -22,6 +22,7 @@ public class Filter extends OncePerRequestFilter{
             throws ServletException, IOException {   
                     String tokenJWT = findToken(request);
                     String userLogin = tokenService.findUserInToken(tokenJWT);
+                    
                     filterChain.doFilter(request, response);
     }
 

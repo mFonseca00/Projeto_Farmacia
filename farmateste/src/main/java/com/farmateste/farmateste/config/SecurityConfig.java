@@ -2,6 +2,7 @@ package com.farmateste.farmateste.config; // Pacote da classe
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,12 +20,17 @@ public class SecurityConfig {
     // Método que configura as regras de segurança HTTP
     public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
         http
-            // Desabilita a proteção CSRF (comum em APIs stateless)
-            .csrf(csrf -> csrf.disable())
-            // Configura a gestão de sessão para ser STATELESS (sem estado)
-            // O servidor não criará ou usará sessões HTTP.
-            // Ideal para APIs RESTful que usam tokens (ex: JWT).
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+            // Desabilita CSRF (comum para APIs stateless)
+            .csrf(csrf -> csrf.disable()) // Nova sintaxe lambda
+            // Configura gestão de sessão como STATELESS
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            // Configura autorizações para requisições HTTP (CORRIGIDO O ENCADEAMENTO E MÉTODO)
+            .authorizeHttpRequests(auth -> auth
+                // Permite requisições POST para /login sem autenticação
+                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                // Qualquer outra requisição exige autenticação
+                .anyRequest().authenticated()
+            );
 
         // Constrói e retorna a cadeia de filtros de segurança configurada
         return http.build();
