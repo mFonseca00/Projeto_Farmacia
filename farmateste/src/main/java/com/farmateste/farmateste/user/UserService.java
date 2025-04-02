@@ -1,9 +1,13 @@
 package com.farmateste.farmateste.user;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.farmateste.farmateste.config.PassowordCrypt;
+
 import lombok.RequiredArgsConstructor;
 
 @Service // Marca como um serviço Spring.
@@ -14,6 +18,8 @@ public class UserService implements UserDetailsService {
     // Repositório para acessar dados dos usuários.
     private final UserRepository repository;
 
+    private final ModelMapper modelMapper;
+
     // Método chamado pelo Spring Security para carregar um usuário pelo nome.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -21,4 +27,14 @@ public class UserService implements UserDetailsService {
         // Retorna os detalhes do usuário (UserDetails) para o Spring Security.
         return repository.findByUsername(username);
     }
+
+    public UserDTO createUser(UserDTO dto) {
+        User user = modelMapper.map(dto, User.class);
+        String cryptPassword = PassowordCrypt.encryption(user.getPassword());
+        user.setPassword(cryptPassword);
+        repository.save(user);
+        return modelMapper.map(user, UserDTO.class);
+    }
+
+
 }
