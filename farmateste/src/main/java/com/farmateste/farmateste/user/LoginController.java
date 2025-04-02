@@ -6,6 +6,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.farmateste.farmateste.config.TokenService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,9 +22,11 @@ public class LoginController {
     // Gerenciador de autenticação do Spring Security
     private final AuthenticationManager auth;
 
+    private final TokenService tokenService;
+
     @PostMapping // Responde a POST /login
     // Recebe credenciais (DTO), valida e tenta autenticar
-    public ResponseEntity<Void> userCredentialsValidation(@RequestBody @Valid UserCredentialsDTO credentials) {
+    public ResponseEntity userCredentialsValidation(@RequestBody @Valid UserCredentialsDTO credentials) {
         // Cria token com usuário/senha
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword());
@@ -31,7 +36,6 @@ public class LoginController {
         Authentication authentication = auth.authenticate(token);
 
         // Se autenticado com sucesso, retorna 200 OK.
-        // (Aqui normalmente se retornaria um token JWT)
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(tokenService.createToken((User) authentication.getPrincipal()));
     }
 }
