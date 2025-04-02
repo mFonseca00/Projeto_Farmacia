@@ -11,10 +11,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration // Marca como classe de configuração Spring
 @EnableWebSecurity // Habilita a segurança web do Spring Security
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final Filter filter;
 
     @Bean // Define um Bean gerenciado pelo Spring
     // Método que configura as regras de segurança HTTP
@@ -29,8 +35,8 @@ public class SecurityConfig {
                 // Permite requisições POST para /login sem autenticação
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
                 // Qualquer outra requisição exige autenticação
-                .anyRequest().authenticated()
-            );
+                .anyRequest().authenticated())
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 
         // Constrói e retorna a cadeia de filtros de segurança configurada
         return http.build();
