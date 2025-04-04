@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,8 +22,9 @@ import org.springframework.http.ResponseEntity;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/drugs")
 @RequiredArgsConstructor
+@RequestMapping("/drugs")
+@SecurityRequirement(name = "bearer-key")
 public class DrugController {
 
     private final DrugService drugService;

@@ -34,6 +34,10 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Permite requisições POST para /login sem autenticação
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                // Permite o acesso às páginas relacionadas ao swagger
+                .requestMatchers("/v3/api-docs/**").permitAll()
+                .requestMatchers("/swagger-ui.html").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
                 // Qualquer outra requisição exige autenticação
                 .anyRequest().authenticated())
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
